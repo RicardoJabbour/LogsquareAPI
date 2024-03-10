@@ -14,7 +14,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -52,19 +52,7 @@ builder.Services.AddDbContext<LogsquareDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowOrigin",
-//        builder =>
-//        {
-//            builder.WithOrigins("http://localhost:4200")
-//                   .AllowAnyHeader()
-//                   .AllowAnyMethod();
-//        });
-//});
-
-
-var secret = "1234567899874563210..0...00..0.0.0.0.0.0.0212"; // Replace with a strong, random secret key
+var secret = "1234567899874563210..0...00..0.0.0.0.0.0.0212"; 
 var key = Encoding.ASCII.GetBytes(secret);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

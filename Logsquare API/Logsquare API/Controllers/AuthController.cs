@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Model.Data.DTOs;
 using Model.Data.Models;
-using Model.Data.Repositories;
 using Model.Data.Repositories.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BCrypt.Net; // Assuming you've installed the BCrypt.Net NuGet package
 
 namespace Logsquare_API.Controllers
 {

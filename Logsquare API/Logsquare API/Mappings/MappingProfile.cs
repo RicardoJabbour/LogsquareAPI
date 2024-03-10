@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Model.Data.DTOs;
 using Model.Data.Models;
-using System.Collections.Generic;
 
 namespace Logsquare_API.Mappings
 {
