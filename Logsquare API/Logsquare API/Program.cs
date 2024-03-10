@@ -8,6 +8,7 @@ using Model.Data.Models;
 using Model.Data.Repositories;
 using Model.Data.Repositories.Interfaces;
 using Newtonsoft.Json;
+using Services;
 using System;
 using System.Text;
 
@@ -51,6 +52,7 @@ builder.Services.AddDbContext<LogsquareDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<AuthService>();
 
 var secret = "1234567899874563210..0...00..0.0.0.0.0.0.0212"; 
 var key = Encoding.ASCII.GetBytes(secret);

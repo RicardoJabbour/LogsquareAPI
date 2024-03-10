@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Model.Data.DTOs;
 using Model.Data.Models;
 using Model.Data.Repositories.Interfaces;
+using Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,11 +17,13 @@ namespace Logsquare_API.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly AuthService _authService;
 
-        public AuthController(IUserRepository userRepository, IMapper mapper)
+        public AuthController(IUserRepository userRepository, IMapper mapper, AuthService authService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _authService = authService;
         }
 
         [HttpPost("SignIn")]
@@ -62,40 +65,12 @@ namespace Logsquare_API.Controllers
 
                 var userDTO = _mapper.Map<UserDTO>(user);
 
-                var token = GenerateJwtToken(userDTO);
+                var token = _authService.GenerateJwtToken(userDTO);
                 return Ok(new { token });
             }
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
-            }
-        }
-
-        private string GenerateJwtToken(UserDTO user)
-        {
-            try
-            {
-                var secret = "1234567899874563210..0...00..0.0.0.0.0.0.0212";
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Email, user.Email)
-                    }),
-                    Expires = DateTime.UtcNow.AddMinutes(30),
-                    SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)
-                };
-
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                return tokenHandler.WriteToken(securityToken);
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
             }
         }
 
